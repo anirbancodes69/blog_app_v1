@@ -6,7 +6,6 @@ use App\Models\Blog;
 use App\Models\Like;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\LikeResource;
 
 class LikeController extends Controller
 {
@@ -15,7 +14,7 @@ class LikeController extends Controller
      */
     public function index(Blog $blog)
     {
-        $likes = LikeResource::collection($blog->likes()->with(['user', 'blog'])->latest()->paginate());
+        $likes = $blog->likes()->with(['user', 'blog'])->latest()->paginate();
 
         return $likes;
     }
@@ -29,7 +28,7 @@ class LikeController extends Controller
             'user_id' => 1
         ]);
 
-        return new LikeResource($like);
+        return $like;
     }
 
     /**
@@ -37,7 +36,7 @@ class LikeController extends Controller
      */
     public function show(Blog $blog, Like $like)
     {
-        return new LikeResource($like);
+        return $like;
     }
 
     /**

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Resources\BlogResource;
 use App\Models\Blog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -14,8 +13,14 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $blogs = Blog::latest();
-        return BlogResource::collection($blogs->paginate());
+        $latestBlogs = Blog::latest()->take(6)->get();
+
+        $mostLikedBlogs = Blog::mostLiked()->get();
+
+        return [
+            "latestBlogs" => $latestBlogs,
+            "mostLikedBlogs" => $mostLikedBlogs,
+        ];
     }
 
     /**
@@ -32,7 +37,7 @@ class BlogController extends Controller
             'user_id' => 1
         ]);
 
-        return new BlogResource($blog);
+        return $blog;
     }
 
 
@@ -42,7 +47,7 @@ class BlogController extends Controller
     public function show(Blog $blog)
     {
 
-        return new BlogResource($blog);
+        return $blog->loadCount('likes')->load(['user']);
     }
 
     /**
@@ -58,7 +63,7 @@ class BlogController extends Controller
             ])
         );
 
-        return new BlogResource($blog);
+        return $blog;
     }
 
     /**
