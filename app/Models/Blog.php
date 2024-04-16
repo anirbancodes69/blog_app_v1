@@ -25,6 +25,11 @@ class Blog extends Model
         return $this->hasMany(Like::class);
     }
 
+    public function categories()
+    {
+        return $this->hasMany(CategoryBlog::class);
+    }
+
     public function scopeMostLiked(EloquentBuilder|QueryBuilder $query): EloquentBuilder|QueryBuilder
     {
         return $query->withCount('likes')->orderBy('likes_count', 'desc')->take(3);

@@ -18,10 +18,9 @@ class DatabaseSeeder extends Seeder
 
         $this->call(LikeSeeder::class);
 
+        $this->call(CategorySeeder::class);
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $this->call(CategoryBlogSeeder::class);
+
     }
 }

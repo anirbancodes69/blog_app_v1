@@ -17,7 +17,7 @@ $mostLikedBlogs = $blogs['mostLikedBlogs'];
                     @for($i = 0; $i < 3; $i++)
                         <div class="banner-content">
                             <div class="banner-content-main">
-                                <span class="fs-6 has-line">Interior</span>
+                                <span class="fs-6 has-line">{{$latestBlogs[$i]->categories[0]->category->name}}</span>
                                 <h4><a href="{{route('blog.show', $latestBlogs[$i])}}">{{$latestBlogs[$i]->title}}</a></h4>
                                 <div class="blog-date">
                                     <div class="blog-date-start">
@@ -55,7 +55,7 @@ $mostLikedBlogs = $blogs['mostLikedBlogs'];
                 
                 <div class="col-lg-4">
                     <div class="post-feature">
-                        <span class="fs-6 has-line">Travels</span>
+                        <span class="fs-6 has-line">{{$mostLikedBlog->categories[0]->category->name}}</span>
                         <h6><a href="{{route('blog.show', $mostLikedBlog)}}">{{$mostLikedBlog->title}}</a></h6>
                         <div class="blog-item-info-release">
                             <span>{{ \Carbon\Carbon::parse($mostLikedBlog->created_at)->diffForHumans() }}</span> <span class="dot"></span> <span>{{calculateReadingTime($mostLikedBlog->content)}} min read</span>
@@ -95,7 +95,7 @@ $mostLikedBlogs = $blogs['mostLikedBlogs'];
                             </a>
                         </div>
                         <div class="blog-item-info">
-                            <span class="fs-6 has-line">Travels</span>
+                            <span class="fs-6 has-line">{{$latestBlog->categories[0]->category->name}}</span>
                             <h5><a href="{{route('blog.show', $latestBlog)}}">{{$latestBlog->title}}</a></h5>
                             <div class="blog-item-info-release">
                                 <span>{{ \Carbon\Carbon::parse($latestBlog->created_at)->diffForHumans() }}</span> <span class="dot"></span> <span>{{calculateReadingTime($latestBlog->content)}} min read</span>

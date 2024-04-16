@@ -13,9 +13,9 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $latestBlogs = Blog::latest()->take(6)->get();
+        $latestBlogs = Blog::with('categories.category')->latest()->take(6)->get();
 
-        $mostLikedBlogs = Blog::mostLiked()->get();
+        $mostLikedBlogs = Blog::with('categories.category')->mostLiked()->get();
 
         return [
             "latestBlogs" => $latestBlogs,
