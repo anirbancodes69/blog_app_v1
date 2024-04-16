@@ -1,8 +1,13 @@
 @extends('layouts.app')
 
+@php
+$latestBlogs = $blogs['latestBlogs'];
+$mostLikedBlogs = $blogs['mostLikedBlogs'];
+@endphp
+
 @section('content')
         <!-- Banner Starts Here -->
-        <section class="banner"
+    <section class="banner"
         style="background-color: #F5F5F5; background-image: url({{ asset('front/dist/images/banner.jpg') }}); background-position: right; background-repeat: no-repeat;">
         <div class="container">
             <div class="row">
@@ -13,19 +18,19 @@
                         <div class="banner-content">
                             <div class="banner-content-main">
                                 <span class="fs-6 has-line">Interior</span>
-                                <h4><a href="details.html">{{$blogs[$i]->title}}</a></h4>
+                                <h4><a href="{{route('blog.show', $latestBlogs[$i])}}">{{$latestBlogs[$i]->title}}</a></h4>
                                 <div class="blog-date">
                                     <div class="blog-date-start">
-                                        <span>{{ \Carbon\Carbon::parse($blogs[$i]->created_at)->diffForHumans() }}</span>
+                                        <span>{{ \Carbon\Carbon::parse($latestBlogs[$i]->created_at)->diffForHumans() }}</span>
                                     </div>
                                     <div class="blog-date-end">
-                                        <span>{{calculateReadingTime($blogs[$i]->content)}} min read</span>
+                                        <span>{{calculateReadingTime($latestBlogs[$i]->content)}} min read</span>
                                     </div>
                                 </div>
                                 <p>
-                                    {{readMore($blogs[$i]->content)}}
+                                    {!!readMore($latestBlogs[$i]->content)!!}
                                 </p>
-                                <a href="{{route('blog.show', $blogs[$i])}}" class="btn btn-default">Read More</a>
+                                <a href="{{route('blog.show', $latestBlogs[$i])}}" class="btn btn-default">Read More</a>
                             </div>
                         </div>
                     @endfor
@@ -41,18 +46,21 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h4 class="heading">Trending Now</h4>
+                    <h4 class="heading">Most Liked</h4>
                 </div>
             </div>
             <div class="row">
+
+            @foreach ($mostLikedBlogs as $mostLikedBlog)
+                
                 <div class="col-lg-4">
                     <div class="post-feature">
                         <span class="fs-6 has-line">Travels</span>
-                        <h6><a href="details.html">Top 10 beautiful Place in Bangladesh</a></h6>
+                        <h6><a href="{{route('blog.show', $mostLikedBlog)}}">{{$mostLikedBlog->title}}</a></h6>
                         <div class="blog-item-info-release">
-                            <span>March 25, 2021</span> <span class="dot"></span> <span>4 min read</span>
+                            <span>{{ \Carbon\Carbon::parse($mostLikedBlog->created_at)->diffForHumans() }}</span> <span class="dot"></span> <span>{{calculateReadingTime($mostLikedBlog->content)}} min read</span>
                         </div>
-                        <a href="details.html" class="btn btn-link">Read Article
+                        <a href="{{route('blog.show', $mostLikedBlog)}}" class="btn btn-link">Read Article
                             <svg width="18" height="12" viewBox="0 0 18 12" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path d="M12.5 1.5L17 6M17 6L12.5 10.5M17 6H1" stroke="currentColor" stroke-width="1.5"
@@ -61,38 +69,8 @@
                         </a>
                     </div>
                 </div>
-                <div class="col-lg-4 my-4 my-lg-0">
-                    <div class="post-feature">
-                        <span class="fs-6 has-line">Travels</span>
-                        <h6><a href="details.html">Top 10 beautiful Place in Bangladesh</a></h6>
-                        <div class="blog-item-info-release">
-                            <span>March 25, 2021</span> <span class="dot"></span> <span>4 min read</span>
-                        </div>
-                        <a href="details.html" class="btn btn-link">Read Article
-                            <svg width="18" height="12" viewBox="0 0 18 12" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12.5 1.5L17 6M17 6L12.5 10.5M17 6H1" stroke="currentColor" stroke-width="1.5"
-                                    stroke-linecap="round" stroke-linejoin="round"></path>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="post-feature">
-                        <span class="fs-6 has-line">Travels</span>
-                        <h6><a href="details.html">Top 10 beautiful Place in Bangladesh</a></h6>
-                        <div class="blog-item-info-release">
-                            <span>March 25, 2021</span> <span class="dot"></span> <span>4 min read</span>
-                        </div>
-                        <a href="details.html" class="btn btn-link">Read Article
-                            <svg width="18" height="12" viewBox="0 0 18 12" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12.5 1.5L17 6M17 6L12.5 10.5M17 6H1" stroke="currentColor" stroke-width="1.5"
-                                    stroke-linecap="round" stroke-linejoin="round"></path>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
+            @endforeach
+                
             </div>
         </div>
     </section>
@@ -107,6 +85,8 @@
                 </div>
             </div>
             <div class="row">
+
+            @foreach ($latestBlogs as $latestBlog)                
                 <div class="col-lg-4 col-md-6">
                     <div class="blog-item blog-item-sm">
                         <div class="blog-item-image">
@@ -116,11 +96,11 @@
                         </div>
                         <div class="blog-item-info">
                             <span class="fs-6 has-line">Travels</span>
-                            <h5><a href="details.html">Top 10 beautiful Place in Bangladesh</a></h5>
+                            <h5><a href="{{route('blog.show', $latestBlog)}}">{{$latestBlog->title}}</a></h5>
                             <div class="blog-item-info-release">
-                                <span>March 25, 2021</span> <span class="dot"></span> <span>4 min read</span>
+                                <span>{{ \Carbon\Carbon::parse($latestBlog->created_at)->diffForHumans() }}</span> <span class="dot"></span> <span>{{calculateReadingTime($latestBlog->content)}} min read</span>
                             </div>
-                            <a href="details.html" class="btn btn-link">Read Article
+                            <a href="{{route('blog.show', $latestBlog)}}" class="btn btn-link">Read Article
                                 <svg width="18" height="12" viewBox="0 0 18 12" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path d="M12.5 1.5L17 6M17 6L12.5 10.5M17 6H1" stroke="currentColor"
@@ -130,128 +110,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 my-4 my-md-0 my-lg-0 col-md-6">
-                    <div class="blog-item blog-item-sm">
-                        <div class="blog-item-image">
-                            <a href="details.html">
-                                <img src="{{ asset('front/dist/images/sm-02.jpg') }} " alt="Image">
-                            </a>
-                        </div>
-                        <div class="blog-item-info">
-                            <span class="fs-6 has-line">Travels</span>
-                            <h5><a href="details.html">Top 10 beautiful Place in Bangladesh</a></h5>
-                            <div class="blog-item-info-release">
-                                <span>March 25, 2021</span> <span class="dot"></span> <span>4 min read</span>
-                            </div>
-                            <a href="details.html" class="btn btn-link">Read Article
-                                <svg width="18" height="12" viewBox="0 0 18 12" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12.5 1.5L17 6M17 6L12.5 10.5M17 6H1" stroke="currentColor"
-                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mt-0 mt-md-4 mt-lg-0 col-md-6">
-                    <div class="blog-item blog-item-sm">
-                        <div class="blog-item-image">
-                            <a href="details.html">
-                                <img src="{{ asset('front/dist/images/sm-03.jpg') }} " alt="Image">
-                            </a>
-                        </div>
-                        <div class="blog-item-info">
-                            <span class="fs-6 has-line">Travels</span>
-                            <h5><a href="details.html">Top 10 beautiful Place in Bangladesh</a></h5>
-                            <div class="blog-item-info-release">
-                                <span>March 25, 2021</span> <span class="dot"></span> <span>4 min read</span>
-                            </div>
-                            <a href="details.html" class="btn btn-link">Read Article
-                                <svg width="18" height="12" viewBox="0 0 18 12" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12.5 1.5L17 6M17 6L12.5 10.5M17 6H1" stroke="currentColor"
-                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mt-4 col-md-6">
-                    <div class="blog-item blog-item-sm">
-                        <div class="blog-item-image">
-                            <a href="details.html">
-                                <img src="{{ asset('front/dist/images/sm-04.jpg') }}" alt="Image">
-                            </a>
-                        </div>
-                        <div class="blog-item-info">
-                            <span class="fs-6 has-line">Travels</span>
-                            <h5><a href="details.html">Top 10 beautiful Place in Bangladesh</a></h5>
-                            <div class="blog-item-info-release">
-                                <span>March 25, 2021</span> <span class="dot"></span> <span>4 min read</span>
-                            </div>
-                            <a href="details.html" class="btn btn-link">Read Article
-                                <svg width="18" height="12" viewBox="0 0 18 12" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12.5 1.5L17 6M17 6L12.5 10.5M17 6H1" stroke="currentColor"
-                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mt-4 col-md-6">
-                    <div class="blog-item blog-item-sm">
-                        <div class="blog-item-image">
-                            <a href="details.html">
-                                <img src="{{ asset('front/dist/images/sm-05.jpg') }} " alt="Image">
-                            </a>
-                        </div>
-                        <div class="blog-item-info">
-                            <span class="fs-6 has-line">Travels</span>
-                            <h5><a href="details.html">Top 10 beautiful Place in Bangladesh</a></h5>
-                            <div class="blog-item-info-release">
-                                <span>March 25, 2021</span> <span class="dot"></span> <span>4 min read</span>
-                            </div>
-                            <a href="details.html" class="btn btn-link">Read Article
-                                <svg width="18" height="12" viewBox="0 0 18 12" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12.5 1.5L17 6M17 6L12.5 10.5M17 6H1" stroke="currentColor"
-                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mt-4 col-md-6">
-                    <div class="blog-item blog-item-sm">
-                        <div class="blog-item-image">
-                            <a href="details.html">
-                                <img src="{{ asset('front/dist/images/sm-06.jpg') }} " alt="Image">
-                            </a>
-                        </div>
-                        <div class="blog-item-info">
-                            <span class="fs-6 has-line">Travels</span>
-                            <h5><a href="details.html">Top 10 beautiful Place in Bangladesh</a></h5>
-                            <div class="blog-item-info-release">
-                                <span>March 25, 2021</span> <span class="dot"></span> <span>4 min read</span>
-                            </div>
-                            <a href="details.html" class="btn btn-link">Read Article
-                                <svg width="18" height="12" viewBox="0 0 18 12" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12.5 1.5L17 6M17 6L12.5 10.5M17 6H1" stroke="currentColor"
-                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+            @endforeach
             </div>
         </div>
     </section>
     <!-- Latest Post Ends Here -->
 
     <!-- Featured Post Starts Here -->
-    <section class="section-padding">
+    <!-- <section class="section-padding">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -307,7 +173,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
     <!-- Featured Post Ends Here -->
 
     <!-- All Post Starts Here -->

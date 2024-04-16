@@ -22,5 +22,5 @@ use Illuminate\Support\Facades\Route;
 //     return view('pages.blog.show');
 // });
 
-Route::resource('blog', BlogController::class);
+Route::resource('blog', BlogController::class)->only('index', 'show');
 

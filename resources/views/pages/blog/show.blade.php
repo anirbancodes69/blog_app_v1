@@ -14,23 +14,23 @@
                 <div class="col-lg-10">
                     <div class="blog-intro-area">
                         <span class="has-line fs-6"><a href="#">Interior</a></span>
-                        <h3>20 essential skills for successful web designers</h3>
+                        <h3>{{$blog->title}}</h3>
                         <div class="blog-intro-area-bottom">
                             <div class="intro-start">
                                 <div class="intro-start-author">
                                     <div class="author-image">
                                         <img src="{{ asset('front/dist/images/authorsm.png') }}" alt="Author">
                                     </div>
-                                    <a href="#" class="fs-6">Kadin Dias</a>
+                                    <a href="#" class="fs-6">{{$blog->user->name}}</a>
                                 </div>
                                 <div class="intro-start-release d-flex">
                                     <div>
                                         <span class="dot"></span>
-                                        <span class="intro-start-time">March 25, 2021</span>
+                                        <span class="intro-start-time">{{\Carbon\Carbon::parse($blog->created_at)->diffForHumans()}}</span>
                                     </div>
                                     <div>
                                         <span class="dot"></span>
-                                        <span class="intro-start-time">4 min read</span>
+                                        <span class="intro-start-time">{{calculateReadingTime($blog->content)}} min read</span>
                                     </div>
                                 </div>
                             </div>
@@ -115,7 +115,7 @@
                                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M5.49997 18.9999H2.79999C2.3226 18.9999 1.86477 18.8102 1.5272 18.4727C1.18964 18.1351 1 17.6773 1 17.1999V10.8999C1 10.4226 1.18964 9.96472 1.5272 9.62715C1.86477 9.28959 2.3226 9.09995 2.79999 9.09995H5.49997M11.7999 7.29996V3.69998C11.7999 2.9839 11.5155 2.29715 11.0091 1.79081C10.5028 1.28446 9.81603 1 9.09995 1L5.49997 9.09995V18.9999H15.6519C16.086 19.0048 16.5072 18.8527 16.838 18.5715C17.1688 18.2903 17.3868 17.8991 17.4519 17.4699L18.6939 9.36995C18.733 9.11197 18.7156 8.84856 18.6429 8.59798C18.5701 8.34739 18.4438 8.11562 18.2726 7.91872C18.1013 7.72182 17.8894 7.5645 17.6513 7.45765C17.4133 7.35081 17.1548 7.297 16.8939 7.29996H11.7999Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
-                                    <span>24 Likes</span>
+                                    <span>{{$blog->likes_count}} Likes</span>
                                 </div>
                                 <div class="blogy-counts">
                                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -126,6 +126,9 @@
                             </div>
                         </div>
                         <div class="col-lg-10">
+                            {{$blog->content}}
+                        </div>
+                        <!-- <div class="col-lg-10">
                             <div class="blog-article-end">
                                 <h4>20 web designer skills to have</h4>
                                 <p>
@@ -229,7 +232,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

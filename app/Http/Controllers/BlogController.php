@@ -53,7 +53,10 @@ class BlogController extends Controller
         // Call the index method of the API BlogController
         $blog = $apiBlogController->show($blog);
 
-        return $blog;
+        // return $blog;
+
+        return view('pages.blog.show', compact('blog'));
+
     }
 
     /**
