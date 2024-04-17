@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="col-lg-10">
                     <div class="blog-intro-area">
-                        <span class="has-line fs-6"><a href="#">Interior</a></span>
+                        <span class="has-line fs-6"><a href="#">{{$blog->categories[0]->category->name}}</a></span>
                         <h3>{{$blog->title}}</h3>
                         <div class="blog-intro-area-bottom">
                             <div class="intro-start">

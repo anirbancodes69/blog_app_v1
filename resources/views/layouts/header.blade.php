@@ -45,7 +45,7 @@
                 <!-- Mobile Menu Ends Here -->
 
                 <!-- Menu Starts Here -->
-                <div class="main-menu d-none d-lg-flex">
+                <!-- <div class="main-menu d-none d-lg-flex">
                     <ul class="main-menu-items list-unstyled">
                         <li><a href="{{route('blog.index')}}" class="main-menu-item active-item">Home</a></li>
                         <li><a href="#" class="main-menu-item">Travel</a></li>
@@ -60,7 +60,7 @@
                             </svg>
                         </div>
                     </form>
-                </div>
+                </div> -->
                 <!-- Menu Items Ends Here -->
             </div>
         </div>

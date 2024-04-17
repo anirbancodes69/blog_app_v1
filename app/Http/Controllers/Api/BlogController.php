@@ -47,7 +47,7 @@ class BlogController extends Controller
     public function show(Blog $blog)
     {
 
-        return $blog->loadCount('likes')->load(['user']);
+        return $blog->loadCount('likes')->load(['user', 'categories.category']);
     }
 
     /**
