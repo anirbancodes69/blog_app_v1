@@ -22,5 +22,8 @@ use Illuminate\Support\Facades\Route;
 //     return view('pages.blog.show');
 // });
 
+
 Route::resource('blog', BlogController::class)->only('index', 'show');
+
+Route::get('/', fn() => redirect()->route('blog.index'));
 
